@@ -1,8 +1,10 @@
 <?php
 namespace ProyectoWeb\app\controllers;
 
+use ProyectoWeb\entity\Category;
 use Psr\Container\ContainerInterface;
 use ProyectoWeb\repository\ProductRepository;
+use ProyectoWeb\repository\CategoryRepository;
 
 class PageController
 {
@@ -18,6 +20,10 @@ class PageController
         $carrusel = $repository->getCarrusel();
         $destacados = $repository->getDestacados();
         $novedades = $repository->getNovedades();
-        return $this->container->renderer->render($response, "index.view.php", compact('title', 'carrusel', 'destacados', 'novedades'));
+
+        $repositoryCateg = new CategoryRepository();
+        $categorias = $repositoryCateg->findAll();
+
+        return $this->container->renderer->render($response, "index.view.php", compact('title', 'carrusel', 'destacados', 'novedades', 'categorias'));
     }
 }
