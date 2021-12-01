@@ -1,10 +1,12 @@
 <?php
 namespace ProyectoWeb\app\controllers;
 
+use JasonGrimes\Paginator;
 use ProyectoWeb\exceptions\NotFoundException;
 use Psr\Container\ContainerInterface;
 use ProyectoWeb\repository\ProductRepository;
 use ProyectoWeb\repository\CategoryRepository;
+use ProyectoWeb\core\App;
 
 
 class ProductController
@@ -33,6 +35,7 @@ class ProductController
 
     public function listado($request, $response, $args) {
         extract($args);
+        $currentPage = ($currentPage ?? 1);
         $repositorio = new CategoryRepository();
         $categorias = $repositorio->findAll();
         try{
@@ -43,8 +46,23 @@ class ProductController
         }
         $title = $categoriaActual->getNombre();
         $repositorioProductos = new ProductRepository();
-        $productos = $repositorioProductos->getByCategory($categoriaActual->getId());
+
+        //Datos para el paginador
+        $currentPage = ($currentPage ?? 1);
+        $totalItems = $repositorioProductos->getCountByCategory($categoriaActual->getId());
+        $itemsPerPage = APP::get('config')['itemsPerPage'];
+        $urlPattern = $this->container->router->pathFor('categoria', 
+        ['nombre' =>  \ProyectoWeb\app\utils\Utils::encodeURI($categoriaActual->getNombre()),
+         'id' => $categoriaActual->getId()
+        ]) .
+        '/page/(:num)';
+        $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
         
-        return $this->container->renderer->render($response, "categoria.view.php", compact('title', 'categorias', 'categoriaActual', 'productos'));
+        $productos = $repositorioProductos->getByCategory($categoriaActual->getId(),
+         $itemsPerPage, $currentPage);
+
+        
+        return $this->container->renderer->render($response, "categoria.view.php", 
+                compact('title', 'categorias', 'categoriaActual', 'productos', 'paginator'));
     }
 }

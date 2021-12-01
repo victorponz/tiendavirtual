@@ -14,6 +14,7 @@ return [
     'slim' => [
         'settings' => [
             'displayErrorDetails' => true //False en produccción
+            ]
         ],
-    ]
+    'itemsPerPage' => 3
 ];
