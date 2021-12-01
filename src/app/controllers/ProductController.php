@@ -17,7 +17,6 @@ class ProductController
     }
     public function ficha($request, $response, $args) {
         extract($args);
-        $title = 
         $repositoryCateg = new CategoryRepository();
         $categorias = $repositoryCateg->findAll();
         $repositorio = new ProductRepository();
@@ -30,5 +29,22 @@ class ProductController
         $title = $producto->getNombre();
         $relacionados = $repositorio->getRelacionados($producto);
         return $this->container->renderer->render($response, "product.view.php", compact('title', 'categorias', 'producto', 'relacionados'));
+    }
+
+    public function listado($request, $response, $args) {
+        extract($args);
+        $repositorio = new CategoryRepository();
+        $categorias = $repositorio->findAll();
+        try{
+            $categoriaActual = $repositorio->findById($id);
+        }catch(NotFoundException $nfe){
+            $response = new \Slim\Http\Response(404);
+            return $response->write("Categoría no encontrada");
+        }
+        $title = $categoriaActual->getNombre();
+        $repositorioProductos = new ProductRepository();
+        $productos = $repositorioProductos->getByCategory($categoriaActual->getId());
+        
+        return $this->container->renderer->render($response, "categoria.view.php", compact('title', 'categorias', 'categoriaActual', 'productos'));
     }
 }

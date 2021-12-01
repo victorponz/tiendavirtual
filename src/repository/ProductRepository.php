@@ -38,4 +38,10 @@ class ProductRepository extends QueryBuilder
         return $this->executeQuery($sql);
         
     }
+    public  function getByCategory(int $idCategoria)
+    {
+        $sql = "SELECT * FROM productos WHERE id_categoria = $idCategoria";
+        return $this->executeQuery($sql);
+        
+    }
 }

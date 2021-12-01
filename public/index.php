@@ -30,4 +30,5 @@ $app->get('/logout', UserController::class . ':logout');
 
 $app->get('/producto/{nombre}/{id:[0-9]+}', ProductController::class . ':ficha')->setName("ficha");
 
+$app->get('/categoria/{nombre}/{id:[0-9]+}', ProductController::class . ':listado')->setName("categoria");
 $app->run();
