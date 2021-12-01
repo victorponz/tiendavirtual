@@ -23,4 +23,11 @@ class ProductRepository extends QueryBuilder
         return $this->executeQuery($sql);
         
     }
+
+    public  function getNovedades()
+    {
+        $sql = "SELECT * FROM productos ORDER BY fecha DESC LIMIT 6";
+        return $this->executeQuery($sql);
+        
+    }
 }

@@ -17,6 +17,7 @@ class PageController
         $repository = new ProductRepository();
         $carrusel = $repository->getCarrusel();
         $destacados = $repository->getDestacados();
-        return $this->container->renderer->render($response, "index.view.php", compact('title', 'carrusel', 'destacados'));
+        $novedades = $repository->getNovedades();
+        return $this->container->renderer->render($response, "index.view.php", compact('title', 'carrusel', 'destacados', 'novedades'));
     }
 }
