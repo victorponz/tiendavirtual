@@ -16,4 +16,11 @@ class ProductRepository extends QueryBuilder
         return $this->executeQuery($sql);
         
     }
+
+    public  function getDestacados()
+    {
+        $sql = "SELECT * FROM productos WHERE destacado = 1";
+        return $this->executeQuery($sql);
+        
+    }
 }
