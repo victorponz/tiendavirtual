@@ -6,18 +6,22 @@ use Slim\Views\PhpRenderer;
 use ProyectoWeb\app\controllers\PageController;
 use ProyectoWeb\app\controllers\UserController;
 use ProyectoWeb\app\controllers\ProductController;
+use ProyectoWeb\app\controllers\CartController;
 use ProyectoWeb\core\App;
+use ProyectoWeb\core\Cart;
 
 App::bind('rootDir', __DIR__ . '/');
 
 $app = new \Slim\App(APP::get('config')['slim']);
 
 $container = $app->getContainer();
+$container['cart'] = new Cart();
 $templateVariables = [
     "basePath" => $container->request->getUri()->getBasePath(),
     "userName" => ($_SESSION['username'] ?? ''),
     "withCategories" => true,
-    "router" => $container->router
+    "router" => $container->router,
+    "cart" => $container->cart 
 ];
 
 $container['renderer'] = new PhpRenderer("../src/app/views", $templateVariables);
@@ -31,4 +35,7 @@ $app->get('/logout', UserController::class . ':logout');
 $app->get('/producto/{nombre}/{id:[0-9]+}', ProductController::class . ':ficha')->setName("ficha");
 
 $app->get('/categoria/{nombre}/{id:[0-9]+}[/page/{currentPage:[0-9]+}]', ProductController::class . ':listado')->setName("categoria");
+
+$app->get('/cart', CartController::class . ':render')->setName("cart");
+
 $app->run();
