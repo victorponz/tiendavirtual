@@ -138,3 +138,27 @@ h2.subtitle{
   font-size:18px;
   color:#fff;
 }
+
+#ficha-producto{
+  position:relative; 
+  border:1px solid #ddd; 
+  border-radius:4px; 
+  padding:4px;
+  margin: 0 0 10px 0;
+}
+#ficha-producto h2{
+  margin:0;
+}
+#ficha-producto .caption {
+  margin-top:10px;
+}
+#ficha-producto h4{
+  position:absolute; 
+  bottom:4px; 
+  left:4px;
+}
+#ficha-producto .btn.btn-danger{
+  position:absolute; 
+  bottom:4px; 
+  right:4px;
+}

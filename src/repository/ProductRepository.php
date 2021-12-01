@@ -2,7 +2,7 @@
 namespace ProyectoWeb\repository;
 
 use ProyectoWeb\database\QueryBuilder;
-
+use ProyectoWeb\entity\Product;
 
 class ProductRepository extends QueryBuilder
 {
@@ -27,6 +27,14 @@ class ProductRepository extends QueryBuilder
     public  function getNovedades()
     {
         $sql = "SELECT * FROM productos ORDER BY fecha DESC LIMIT 6";
+        return $this->executeQuery($sql);
+        
+    }
+
+    public  function getRelacionados(Product $producto)
+    {
+        $sql = "SELECT * FROM productos WHERE id_categoria = " . $producto->getIdCategoria() .
+                " AND id != " . $producto->getId() . " ORDER BY RAND() LIMIT 6";
         return $this->executeQuery($sql);
         
     }

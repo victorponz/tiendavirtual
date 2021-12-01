@@ -5,6 +5,7 @@ require_once __DIR__ . '/../src/core/bootstrap.php';
 use Slim\Views\PhpRenderer;
 use ProyectoWeb\app\controllers\PageController;
 use ProyectoWeb\app\controllers\UserController;
+use ProyectoWeb\app\controllers\ProductController;
 use ProyectoWeb\core\App;
 
 App::bind('rootDir', __DIR__ . '/');
@@ -25,5 +26,7 @@ $app->get('/', PageController::class . ':home')->setName("home");
 $app->map(['GET', 'POST'], '/login', UserController::class . ':login')->setName("login");
 $app->map(['GET', 'POST'], '/register', UserController::class . ':register');
 $app->get('/logout', UserController::class . ':logout');
+
+$app->get('/producto/{nombre}/{id:[0-9]+}', ProductController::class . ':ficha')->setName("ficha");
 
 $app->run();
