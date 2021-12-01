@@ -2,7 +2,7 @@
 namespace ProyectoWeb\app\controllers;
 
 use Psr\Container\ContainerInterface;
-
+use ProyectoWeb\repository\ProductRepository;
 
 class PageController
 {
@@ -14,6 +14,8 @@ class PageController
     }
     public function home($request, $response, $args) {
         $title = "Inicio";
-        return $this->container->renderer->render($response, "index.view.php", compact('title'));
+        $repository = new ProductRepository();
+        $carrusel = $repository->getCarrusel();
+        return $this->container->renderer->render($response, "index.view.php", compact('title', 'carrusel'));
     }
 }
