@@ -46,4 +46,8 @@ class Utils {
     public static function generateValidHTML5src(string $imgSrc): string{
         return str_replace(' ', '%20', $imgSrc);
     }
+    
+    public static function encodeURI(string $uri): string{
+        return rawurlencode(strtolower(str_replace(' ', '-', $uri)));
+    }
 }

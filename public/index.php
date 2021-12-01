@@ -16,7 +16,8 @@ $container = $app->getContainer();
 $templateVariables = [
     "basePath" => $container->request->getUri()->getBasePath(),
     "userName" => ($_SESSION['username'] ?? ''),
-    "withCategories" => true
+    "withCategories" => true,
+    "router" => $container->router
 ];
 
 $container['renderer'] = new PhpRenderer("../src/app/views", $templateVariables);
