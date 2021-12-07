@@ -1,5 +1,5 @@
 <div class="row carro">
-  <h2 class="subtitle" style="margin:0">Carrito de la compra</h2>
+  <h2 class="subtitle" style="margin:0;">Carrito de la compra</h2>
   <table class="table">
     <thead>
       <tr>
@@ -11,18 +11,31 @@
       </tr>
     </thead>
     <tbody>
+    <?php if ($cart->isEmpty()) : ?>
       <tr>
-        <th scope="row">1</th>
-        <td><a href="#">Flor de pascua</a><a href="#"></a></td>
-        <td>1</td>
-        <td>15,00 €</td>
-        <td>15,00 €</td>
+        <td colspan='5'>
+          <div class='alert alert-danger'>Su carro está vacío.</div>
+        </td>
       </tr>
-    </tbody
+    <?php else : ?>
+      <?php $i = 1;
+        $total = 0;
+        foreach ($productos as $producto) :
+          $total += $cart->getCart()[$producto->getId()] * $producto->getPrecio();
+        ?>
+      <tr>
+        <th scope="row"><?=$i++;?></th>
+        <td><a href="<?=$router->pathFor('ficha', ['nombre' =>  ProyectoWeb\app\utils\Utils::encodeURI($producto->getNombre()), 'id' => $producto->getId()])?>"><?= $producto->getNombre()?></a></td>
+        <td><?= number_format($producto->getPrecio(), 2, ',', ' ')?> €</td>
+        <td><?= $cart->getCart()[$producto->getId()] ?></td>
+        <td><?=  number_format($cart->getCart()[$producto->getId()] * $producto->getPrecio(), 2, ',', ' '); ?> €</td>
+      </tr>
+      <?php endforeach ?>
+    </tbody>
     <tfoot>
       <tr>
         <td colspan="5" style="text-align:right;">
-          <b>Total: 15,00 €</b>
+          <b>Total: <?= number_format($total, 2, ',', ' ')?> €</b>
         </td>
       </tr>
       <tr>
@@ -30,5 +43,6 @@
         <td colspan="2"><a class="btn btn-danger" href="#">Vaciar Carrito</a></td>
       </tr>
     </tfoot>
+    <?php endif ?>
   </table>
 </div>

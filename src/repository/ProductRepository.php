@@ -3,6 +3,7 @@ namespace ProyectoWeb\repository;
 
 use ProyectoWeb\database\QueryBuilder;
 use ProyectoWeb\entity\Product;
+use ProyectoWeb\core\Cart;
 
 class ProductRepository extends QueryBuilder
 {
@@ -55,5 +56,15 @@ class ProductRepository extends QueryBuilder
         
     }
 
+    public function getFromCart(Cart $cart): array
+    {
+        
+        if (empty($cart->getCart())){
+            return array();
+        }
+        $ids = implode(',', array_keys($cart->getCart()));
+        $sql = "SELECT * FROM productos WHERE id IN ($ids)";
+        return $this->executeQuery($sql);   
+    }
 
 }

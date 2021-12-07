@@ -38,4 +38,6 @@ $app->get('/categoria/{nombre}/{id:[0-9]+}[/page/{currentPage:[0-9]+}]', Product
 
 $app->get('/cart', CartController::class . ':render')->setName("cart");
 
+$app->get('/cart/add/{id:[0-9]+}/[{quantity:[0-9]+}]', CartController::class . ':add')->setName("cart-add");
+
 $app->run();

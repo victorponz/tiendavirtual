@@ -23,7 +23,7 @@
         <?php endif ?>
 
         <li>
-            <a href=''><span title='Carrito' class='fa fa-shopping-cart'></span> <span class="badge">0</span></a>
+        <a href='<?=$router->pathFor('cart')?>'><span title='Carrito' class='fa fa-shopping-cart'></span> <span class="badge"><?=$cart->howMany()?></span></a>
         </li>
     </ul>
 </div>
