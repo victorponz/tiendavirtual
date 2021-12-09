@@ -38,4 +38,11 @@ class CartController
         return $response->withRedirect($this->container->router->pathFor('cart'), 303);
     }
 
+    public function empty($request, $response, $args) {
+        extract($args);
+        $this->container['cart']->empty();
+        
+        return $response->withRedirect($this->container->router->pathFor('cart'), 303);
+    }
+
 }

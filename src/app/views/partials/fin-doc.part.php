@@ -23,6 +23,7 @@
 <script src="<?=$basePath;?>/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="<?=$basePath;?>/js/bootstrap.min.js"></script>
+<script src="<?=$basePath;?>/js/app.js"></script>
 </body>
 
 </html>

@@ -40,4 +40,6 @@ $app->get('/cart', CartController::class . ':render')->setName("cart");
 
 $app->get('/cart/add/{id:[0-9]+}/[{quantity:[0-9]+}]', CartController::class . ':add')->setName("cart-add");
 
+$app->get('/cart/empty', CartController::class . ':empty')->setName("cart-empty");
+
 $app->run();

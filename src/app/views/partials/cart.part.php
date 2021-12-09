@@ -40,7 +40,7 @@
       </tr>
       <tr>
         <td colspan="3"><a class="btn btn-danger" href="#">Finalizar compra</a></td>
-        <td colspan="2"><a class="btn btn-danger" href="#">Vaciar Carrito</a></td>
+        <td colspan="2"><a class="btn btn-danger" href="<?=$router->pathFor('cart-empty')?>" onclick="return confirmEmptyCart();">Vaciar Carrito</a></td>
       </tr>
     </tfoot>
     <?php endif ?>
