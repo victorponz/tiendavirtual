@@ -44,5 +44,9 @@ $app->get('/cart/empty', CartController::class . ':empty')->setName("cart-empty"
 
 $app->get('/cart/delete/{id:[0-9]+}', CartController::class . ':delete')->setName("cart-delete");
 
+$app->get('/cart/checkout', CartController::class . ':checkout')->setName("cart-checkout");
+
+$app->get('/cart/thankyou', CartController::class . ':thankyou')->setName("cart-thankyou");
+
 
 $app->run();

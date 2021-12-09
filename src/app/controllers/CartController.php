@@ -16,13 +16,15 @@ class CartController
     public function render($request, $response, $args) {
         extract($args);
         $title = " Carrito ";
+        $header = "Carrito de la compra";
+        $checkout = false;
         $withCategories = false;
         //Obtener los productos del carro;
         $repositorio = new ProductRepository;
         $productos = $repositorio->getFromCart($this->container->cart);
         
         return $this->container->renderer->render($response, "cart.view.php", 
-            compact('title', 'withCategories', 'productos'));
+            compact('title', 'header', 'checkout', 'withCategories', 'productos'));
     }
     public function add($request, $response, $args) {
         extract($args);
@@ -51,4 +53,33 @@ class CartController
         
         return $response->withRedirect($this->container->router->pathFor('cart'), 303);
     }
+
+    public function checkout($request, $response, $args) {
+        if (!isset($_SESSION['username'])) {
+            return $response->withRedirect($this->container->router->pathFor('login') . 
+                "?returnToUrl=" . $this->container->router->pathFor('cart-checkout'), 303);
+
+        }
+        extract($args);
+        $title = " Finalizar compra ";
+        $header = "Pago con PayPal";
+        $withCategories = false;
+        $checkout = true;
+        //Obtener los productos del carro;
+        $repositorio = new ProductRepository;
+        $productos = $repositorio->getFromCart($this->container->cart);
+        
+        return $this->container->renderer->render($response, "cart.view.php", 
+            compact('title', 'header', 'checkout', 'withCategories', 'productos'));
+    }
+    public function thankyou($request, $response, $args) {
+        extract($args);
+        $title = "Gracias por su compra";
+        $this->container['cart']->empty();
+        $withCategories = false;
+
+        return $this->container->renderer->render($response, "thankyou.view.php", 
+        compact('title', 'withCategories'));
+    }
+    
 }
