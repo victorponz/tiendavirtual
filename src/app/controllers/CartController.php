@@ -45,4 +45,10 @@ class CartController
         return $response->withRedirect($this->container->router->pathFor('cart'), 303);
     }
 
+    public function delete($request, $response, $args) {
+        extract($args);
+        $this->container['cart']->deleteItem($id);
+        
+        return $response->withRedirect($this->container->router->pathFor('cart'), 303);
+    }
 }

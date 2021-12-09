@@ -42,4 +42,7 @@ $app->get('/cart/add/{id:[0-9]+}/[{quantity:[0-9]+}]', CartController::class . '
 
 $app->get('/cart/empty', CartController::class . ':empty')->setName("cart-empty");
 
+$app->get('/cart/delete/{id:[0-9]+}', CartController::class . ':delete')->setName("cart-delete");
+
+
 $app->run();

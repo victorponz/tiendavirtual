@@ -8,12 +8,13 @@
         <th>Cantidad</th>
         <th>Precio</th>
         <th>Total</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
     <?php if ($cart->isEmpty()) : ?>
       <tr>
-        <td colspan='5'>
+        <td colspan='6'>
           <div class='alert alert-danger'>Su carro está vacío.</div>
         </td>
       </tr>
@@ -29,18 +30,19 @@
         <td><?= number_format($producto->getPrecio(), 2, ',', ' ')?> €</td>
         <td><?= $cart->getCart()[$producto->getId()] ?></td>
         <td><?=  number_format($cart->getCart()[$producto->getId()] * $producto->getPrecio(), 2, ',', ' '); ?> €</td>
+        <td><a href="<?=$router->pathFor('cart-delete', ['id' => $producto->getId()])?>" onclick="return confirmDeleteItem();"><span class='fa fa-close'></span></a></td>
       </tr>
       <?php endforeach ?>
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="5" style="text-align:right;">
+        <td colspan="6" style="text-align:right;">
           <b>Total: <?= number_format($total, 2, ',', ' ')?> €</b>
         </td>
       </tr>
       <tr>
         <td colspan="3"><a class="btn btn-danger" href="#">Finalizar compra</a></td>
-        <td colspan="2"><a class="btn btn-danger" href="<?=$router->pathFor('cart-empty')?>" onclick="return confirmEmptyCart();">Vaciar Carrito</a></td>
+        <td colspan="3"><a class="btn btn-danger" href="<?=$router->pathFor('cart-empty')?>" onclick="return confirmEmptyCart();">Vaciar Carrito</a></td>
       </tr>
     </tfoot>
     <?php endif ?>
