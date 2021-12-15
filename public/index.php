@@ -42,6 +42,7 @@ $app->get('/cart/add/{id:[0-9]+}/[{quantity:[0-9]+}]', CartController::class . '
 
 $app->get('/cart/add/json/{id:[0-9]+}[/{quantity:[0-9]+}]', CartController::class . ':addJSON')->setName("cart-add-json");
 
+$app->map(['GET', 'POST'], '/cart/update/json/{id:[0-9]+}/[{quantity:[0-9]+}]', CartController::class . ':update')->setName("cart-update-json");
 
 $app->get('/cart/empty', CartController::class . ':empty')->setName("cart-empty");
 
